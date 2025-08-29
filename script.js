@@ -13,9 +13,14 @@ app.use(function(req,res,next){
 
 app.get("/",(req,res)=>{
   res.send("hello mountains v");
-})
-app.get("/about",(req,res)=>{
-  res.send("hello terrains");
+});
+app.get("/about",(req,res,next)=>{
+  return next(new Error("Something went wrong"))
+});
+
+app.use((err, req, res, next) => {
+  console.error(err.stack)
+  res.status(500).send('Something broke!')
 })
 
 app.listen(3001)
